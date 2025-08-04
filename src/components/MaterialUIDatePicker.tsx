@@ -252,7 +252,6 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
     if (inputContainerRef.current) {
       const inputRect = inputContainerRef.current.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
       const isMobile = viewportWidth <= 768;
       
       let newTop, newLeft;

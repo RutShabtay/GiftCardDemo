@@ -878,6 +878,14 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
     }
   }
 
+  const handleHide = () => {
+    // If dropdown was opened but no selection was made, show error
+    if (!selectedCountry && isOpen) {
+      setHasError(true)
+    }
+    setIsOpen(false)
+  }
+
   const handleInputChange = (e) => {
     const value = e.target.value
     setSearchTerm(value)
@@ -943,7 +951,7 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
            }}
          className={classNames('w-full', { 'p-invalid': hasError })}
          onShow={() => setIsOpen(true)}
-         onHide={() => setIsOpen(false)}
+         onHide={handleHide}
          onMouseEnter={() => setIsHovered(true)}
          onMouseLeave={() => setIsHovered(false)}
          onFocus={() => setIsFocused(true)}
@@ -951,7 +959,7 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
           onInput={handleInputChange}
          style={{
            height: '32px', // Hug height from Figma
-           backgroundColor: hasError ? '#FFF5F7' : '#FFFFFF', // bg-primary from Figma
+           backgroundColor: hasError && !isOpen && !isFocused ? '#FFF5F7' : '#FFFFFF', // Red background only when error and not interacting
            border: `1px solid ${hasError ? '#ef4444' : ((isOpen || isFocused) ? '#6780FF' : '#BAC1C5')}`, // border/border-selected-primary when open or focused
            borderRadius: '4px', // 4px radius from Figma
            width: '100%',
