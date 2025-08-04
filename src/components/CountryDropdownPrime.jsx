@@ -8,6 +8,20 @@ import 'primeicons/primeicons.css'
 // Remove PrimeReact default focus styling and customize scrollbar
 const style = document.createElement('style')
 style.textContent = `
+  /* PLACEHOLDER COLOR OVERRIDE - HIGHEST PRIORITY */
+  .p-dropdown .p-dropdown-label,
+  .p-dropdown .p-dropdown-label *,
+  .p-dropdown .p-dropdown-label::before,
+  .p-dropdown .p-dropdown-label::after,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label *,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label::before,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label::after {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+  }
+  
   /* ARROW COLOR OVERRIDE - HIGHEST PRIORITY */
   .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon,
   .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon *,
@@ -42,6 +56,150 @@ style.textContent = `
     stroke-width: 0.001 !important;
     transform: scale(1.05) !important;
     font-size: 13px !important;
+  }
+  
+  /* PLACEHOLDER COLOR OVERRIDE - HIGHEST PRIORITY */
+  .p-dropdown .p-dropdown-label.p-placeholder,
+  .p-dropdown .p-dropdown-label.p-placeholder *,
+  .p-dropdown .p-dropdown-label.p-placeholder::before,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder * {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+    background-color: transparent !important;
+  }
+  
+  /* Specific placeholder color for our dropdown */
+  #country-dropdown .p-dropdown-label.p-placeholder,
+  #country-dropdown .p-dropdown-label.p-placeholder *,
+  #country-dropdown .p-dropdown-label.p-placeholder::before,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder * {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+    background-color: transparent !important;
+  }
+  
+  /* Input placeholder color override */
+  #country-dropdown input::placeholder,
+  #country-dropdown input::-webkit-input-placeholder,
+  #country-dropdown input::-moz-placeholder,
+  #country-dropdown input:-ms-input-placeholder {
+    color: #808D95 !important;
+    opacity: 1 !important;
+  }
+  
+  /* Force placeholder color for all input states */
+  #country-dropdown input,
+  #country-dropdown .p-dropdown-label,
+  #country-dropdown .p-dropdown-label * {
+    color: #808D95 !important;
+  }
+  
+  /* ULTIMATE PLACEHOLDER OVERRIDE - FORCE ALL TEXT TO BE GRAY */
+  #country-dropdown *,
+  #country-dropdown *::before,
+  #country-dropdown *::after {
+    color: var(--placeholder-color, #808D95) !important;
+  }
+  
+  /* FORCE PLACEHOLDER COLOR - ULTIMATE OVERRIDE */
+  .p-dropdown .p-dropdown-label,
+  .p-dropdown .p-dropdown-label *,
+  .p-dropdown .p-dropdown-label::before,
+  .p-dropdown .p-dropdown-label::after,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label * {
+    color: #808D95 !important;
+  }
+  
+  /* Specific for our dropdown */
+  #country-dropdown .p-dropdown-label,
+  #country-dropdown .p-dropdown-label *,
+  #country-dropdown .p-dropdown-label::before,
+  #country-dropdown .p-dropdown-label::after,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label * {
+    color: #808D95 !important;
+  }
+  
+  /* ULTIMATE FORCE - ALL TEXT IN DROPDOWN */
+  .p-dropdown,
+  .p-dropdown *,
+  .p-dropdown *::before,
+  .p-dropdown *::after,
+  .p-dropdown .p-dropdown-label,
+  .p-dropdown .p-dropdown-label *,
+  .p-dropdown .p-dropdown-label::before,
+  .p-dropdown .p-dropdown-label::after,
+  .p-dropdown .p-dropdown-trigger,
+  .p-dropdown .p-dropdown-trigger *,
+  .p-dropdown .p-dropdown-trigger::before,
+  .p-dropdown .p-dropdown-trigger::after {
+    color: #808D95 !important;
+  }
+  
+  /* SPECIFIC FOR OUR DROPDOWN - ULTIMATE OVERRIDE */
+  #country-dropdown,
+  #country-dropdown *,
+  #country-dropdown *::before,
+  #country-dropdown *::after,
+  #country-dropdown .p-dropdown-label,
+  #country-dropdown .p-dropdown-label *,
+  #country-dropdown .p-dropdown-label::before,
+  #country-dropdown .p-dropdown-label::after,
+  #country-dropdown .p-dropdown-trigger,
+  #country-dropdown .p-dropdown-trigger *,
+  #country-dropdown .p-dropdown-trigger::before,
+  #country-dropdown .p-dropdown-trigger::after {
+    color: #808D95 !important;
+  }
+  
+  /* ULTIMATE FORCE - OVERRIDE EVERYTHING */
+  .p-dropdown .p-dropdown-label,
+  .p-dropdown .p-dropdown-label *,
+  .p-dropdown .p-dropdown-label::before,
+  .p-dropdown .p-dropdown-label::after,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label *,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label::before,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label::after,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder *,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder::before,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder::after {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+  }
+  
+  /* SPECIFIC FOR OUR DROPDOWN - ULTIMATE OVERRIDE */
+  #country-dropdown .p-dropdown-label,
+  #country-dropdown .p-dropdown-label *,
+  #country-dropdown .p-dropdown-label::before,
+  #country-dropdown .p-dropdown-label::after,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label *,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label::before,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label::after,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder *,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder::before,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-label.p-placeholder::after {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+  }
+  
+  /* Only change text color when there's actual content */
+  #country-dropdown .p-dropdown-label:not(.p-placeholder) {
+    color: #021D2D !important;
+  }
+  
+  #country-dropdown input:not([value=""]) {
+    color: #021D2D !important;
   }
   
   /* OVERRIDE ANY OTHER DROPDOWN STYLES - HIGHEST PRIORITY */
@@ -673,6 +831,19 @@ if (!document.head.querySelector('style[data-primereact-focus]')) {
   style.setAttribute('data-primereact-focus', 'true')
   document.head.appendChild(style)
   console.log('Arrow color CSS loaded:', style.textContent.includes('#808D95'))
+  console.log('Placeholder color CSS loaded:', style.textContent.includes('p-placeholder'))
+  
+  // Force placeholder color after a short delay
+  setTimeout(() => {
+    const dropdown = document.getElementById('country-dropdown')
+    if (dropdown) {
+      const labels = dropdown.querySelectorAll('.p-dropdown-label')
+      labels.forEach(label => {
+        label.style.color = '#808D95'
+        label.style.setProperty('color', '#808D95', 'important')
+      })
+    }
+  }, 100)
 }
 
 const countries = [
@@ -787,7 +958,9 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
            outline: 'none',
            boxShadow: 'none',
            position: 'relative',
-           '--arrow-color': '#808D95'
+           '--arrow-color': '#808D95',
+           '--placeholder-color': '#808D95',
+           color: selectedCountry || searchTerm ? '#021D2D' : '#808D95'
          }}
                    scrollHeight="200px"
           showClear={false}
@@ -940,19 +1113,46 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
                fontSize: '13px'
              }
            },
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               input: { 
-                   style: { 
-                     padding: '7.5px 8px', // Figma padding: Top 7.5px, Right 8px, Bottom 7.5px, Left 8px
-                     fontSize: '14px', // Smaller font size for 32px height
-                     lineHeight: '17px', // Adjusted line height
-                     color: selectedCountry || searchTerm ? '#021D2D' : '#808D95',
-                     fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
-                     fontWeight: 400,
-                     height: '32px', // Match dropdown height for proper centering
-                     display: 'flex',
-                     alignItems: 'center'
-                   }
-                 },
+           label: {
+             style: {
+               color: selectedCountry || searchTerm ? '#021D2D' : '#808D95',
+               fontSize: '14px',
+               lineHeight: '17px',
+               fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+               fontWeight: 400
+             }
+           },
+           placeholder: {
+             style: {
+               color: '#808D95',
+               fontSize: '14px',
+               lineHeight: '17px',
+               fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+               fontWeight: 400
+             }
+           },
+           text: {
+             style: {
+               color: selectedCountry || searchTerm ? '#021D2D' : '#808D95',
+               fontSize: '14px',
+               lineHeight: '17px',
+               fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+               fontWeight: 400
+             }
+           },
+                       input: {
+              style: {
+                padding: '7.5px 8px', // Figma padding: Top 7.5px, Right 8px, Bottom 7.5px, Left 8px
+                fontSize: '14px', // Smaller font size for 32px height
+                lineHeight: '17px', // Adjusted line height
+                color: selectedCountry || searchTerm ? '#021D2D' : '#808D95',
+                fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+                fontWeight: 400,
+                height: '32px', // Match dropdown height for proper centering
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
                                            item: { 
               style: { 
                 padding: '7.5px 12px', // Figma padding: Top 7.5px, Right 12px, Bottom 7.5px, Left 12px

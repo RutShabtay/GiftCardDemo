@@ -45,20 +45,42 @@ const overrideStyles = `
         border: none !important;
       }
 
-      /* Make footer buttons not bold */
-      .p-button-text {
-        font-weight: normal !important;
-      }
-      
-      .p-button-text .p-button-label {
-        font-weight: normal !important;
-      }
+             /* Make footer buttons not bold */
+       .p-button-text {
+         font-weight: normal !important;
+       }
+       
+       .p-button-text .p-button-label {
+         font-weight: normal !important;
+       }
 
-      /* Set placeholder color */
-      .p-inputtext::placeholder {
-        color: #BAC1C5 !important;
-        opacity: 1; /* For Firefox */
-      }
+       /* Remove background from header navigation buttons */
+       .p-button-text.p-button-plain {
+         background: transparent !important;
+         border: none !important;
+         box-shadow: none !important;
+       }
+       
+       .p-button-text.p-button-plain:hover {
+         background: transparent !important;
+         border: none !important;
+         box-shadow: none !important;
+       }
+       
+       .p-button-text.p-button-plain:focus {
+         background: transparent !important;
+         border: none !important;
+         box-shadow: none !important;
+       }
+
+             /* Set placeholder color */
+       .p-inputtext::placeholder {
+         color: #808D95 !important;
+         opacity: 1; /* For Firefox */
+         font-family: 'Lato', sans-serif !important;
+         font-size: 14px !important;
+         line-height: 17px !important;
+       }
 
       
       /* Ensure no default PrimeReact blue shadow on focus */
@@ -151,12 +173,38 @@ const overrideStyles = `
         line-height: 0 !important;
       }
       
-      /* Additional compression for date cells */
-      .p-datepicker table td > span {
-        margin: 0 !important;
-        padding: 0 !important;
-        line-height: 1 !important;
-      }
+             /* Additional compression for date cells */
+       .p-datepicker table td > span {
+         margin: 0 !important;
+         padding: 0 !important;
+         line-height: 1 !important;
+       }
+       
+       /* Mobile-specific styles */
+       @media (max-width: 768px) {
+         .p-datepicker table td > span {
+           width: 20px !important;
+           height: 20px !important;
+           font-size: 11px !important;
+         }
+         
+         .p-datepicker table td {
+           padding: 2px !important;
+         }
+         
+         .p-datepicker table {
+           font-size: 11px !important;
+         }
+         
+         .p-datepicker .p-datepicker-header {
+           padding: 4px 8px !important;
+         }
+         
+         .p-datepicker .p-datepicker-header button {
+           width: 24px !important;
+           height: 24px !important;
+         }
+       }
       `;
 
 export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
@@ -165,6 +213,7 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const inputContainerRef = useRef<HTMLDivElement>(null);
   const [calendarPosition, setCalendarPosition] = useState<React.CSSProperties>({});
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   
   const [primeSelectedDate, setPrimeSelectedDate] = useState<Date | null>(null);
@@ -196,6 +245,7 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
   const handleOpen = () => {
     if (!showCalendar) {
       setCurrentDate(primeSelectedDate ? dayjs(primeSelectedDate) : dayjs());
+      setLastScrollY(window.scrollY); // Set initial scroll position
     }
     setShowCalendar(!showCalendar);
   };
@@ -215,6 +265,68 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
   };
 
   useEffect(() => {
+    const handleResize = () => {
+      if (showCalendar) {
+        // Recalculate position on resize
+        if (inputContainerRef.current) {
+          const rect = inputContainerRef.current.getBoundingClientRect();
+          const calendarWidth = 308;
+          const calendarMargin = 8;
+          const spaceOnRight = window.innerWidth - (rect.left + rect.width);
+          const isMobile = window.innerWidth <= 768;
+
+          const positionStyle: React.CSSProperties = {
+            position: 'fixed',
+            zIndex: 9999,
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            backgroundColor: 'white',
+            overflow: 'hidden',
+            width: `${calendarWidth}px`
+          };
+
+          if (isMobile) {
+            // On mobile, use smaller calendar and position it properly
+                           const mobileCalendarWidth = Math.min(window.innerWidth - 20, 280); // Larger width for mobile
+            positionStyle.width = `${mobileCalendarWidth}px`;
+            positionStyle.top = rect.bottom + 5; // Position directly below input with small gap
+            positionStyle.left = rect.left; // Align exactly with input start
+                          positionStyle.maxHeight = '70vh'; // Much larger height to avoid scrolling
+            positionStyle.overflowY = 'auto'; // Enable scrolling
+          } else {
+            // Desktop positioning
+            if (spaceOnRight >= calendarWidth + calendarMargin) {
+              positionStyle.top = rect.top;
+              positionStyle.left = rect.left + rect.width + calendarMargin;
+            } else {
+              positionStyle.top = rect.top + rect.height + calendarMargin;
+              positionStyle.left = rect.left;
+            }
+          }
+          setCalendarPosition(positionStyle);
+        }
+      }
+    };
+
+    const handleScroll = () => {
+      if (showCalendar) {
+        const currentScrollY = window.scrollY;
+        const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+        
+        // On mobile, allow less scroll before closing
+        const isMobile = window.innerWidth <= 768;
+        const scrollThreshold = isMobile ? 20 : 10; // 20px on mobile, 10px on desktop
+        
+        if (scrollDifference > scrollThreshold) {
+          console.log('Scroll threshold exceeded, closing calendar');
+          setShowCalendar(false);
+        }
+        
+        setLastScrollY(currentScrollY);
+      }
+    };
+
     const handleOutsideClick = (event: MouseEvent) => {
       if ((event.target as Element).closest('.p-dropdown-panel')) {
         return;
@@ -227,14 +339,19 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
       }
     };
 
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll, true); // true for capture phase
+
     if (showCalendar) {
       document.addEventListener('mousedown', handleOutsideClick);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll, true);
     };
-  }, [showCalendar]);
+  }, [showCalendar, lastScrollY]);
 
   useEffect(() => {
     if (showCalendar && inputContainerRef.current) {
@@ -242,6 +359,7 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
         const calendarWidth = 308;
         const calendarMargin = 8;
         const spaceOnRight = window.innerWidth - (rect.left + rect.width);
+        const isMobile = window.innerWidth <= 768;
 
         const positionStyle: React.CSSProperties = {
             position: 'fixed',
@@ -254,12 +372,23 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
             width: `${calendarWidth}px`
         };
 
-        if (spaceOnRight >= calendarWidth + calendarMargin) {
-            positionStyle.top = rect.top;
-            positionStyle.left = rect.left + rect.width + calendarMargin;
-        } else {
-            positionStyle.top = rect.top + rect.height + calendarMargin;
-            positionStyle.left = rect.left;
+                                                                     if (isMobile) {
+              // On mobile, use smaller calendar and position it properly
+              const mobileCalendarWidth = Math.min(window.innerWidth - 20, 280); // Larger width for mobile
+              positionStyle.width = `${mobileCalendarWidth}px`;
+              positionStyle.top = rect.bottom + 5; // Position directly below input with small gap
+              positionStyle.left = rect.left; // Align exactly with input start
+              positionStyle.maxHeight = '70vh'; // Much larger height to avoid scrolling
+              positionStyle.overflowY = 'auto'; // Enable scrolling
+          } else {
+            // Desktop positioning
+            if (spaceOnRight >= calendarWidth + calendarMargin) {
+                positionStyle.top = rect.top;
+                positionStyle.left = rect.left + rect.width + calendarMargin;
+            } else {
+                positionStyle.top = rect.top + rect.height + calendarMargin;
+                positionStyle.left = rect.left;
+            }
         }
         setCalendarPosition(positionStyle);
     }
@@ -273,11 +402,13 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
       padding: '0 45px 0 14px',
       cursor: 'pointer',
       borderRadius: '4px',
-      fontSize: '16px',
+      fontSize: '14px',
+      fontFamily: "'Lato', sans-serif",
+      lineHeight: '17px',
       boxSizing: 'border-box',
       transition: 'all 0.2s ease',
       outline: 'none',
-      color: primeSelectedDate ? '#021D2D' : '#BAC1C5',
+      color: primeSelectedDate ? '#021D2D' : '#808D95',
       boxShadow: 'none',
       display: 'flex',
       alignItems: 'center'
@@ -384,20 +515,21 @@ export const PrimeReactDatePicker: React.FC<PrimeReactDatePickerProps> = () => {
     const isPast = cellDate.isBefore(dayjs(), 'day');
     const isSelected = primeSelectedDate && cellDate.isSame(dayjs(primeSelectedDate), 'day');
 
-    const style: React.CSSProperties = {
-        width: '26px',
-        height: '26px',
-        borderRadius: '50%',
-        fontSize: '13px',
-        margin: '1px auto',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        border: 'none',
-        transition: 'background-color 0.2s, color 0.2s',
-        color: date.otherMonth || isPast ? '#D3D3D3' : '#000',
-        backgroundColor: 'transparent'
-    };
+         const isMobile = window.innerWidth <= 768;
+     const style: React.CSSProperties = {
+         width: isMobile ? '20px' : '26px',
+         height: isMobile ? '20px' : '26px',
+         borderRadius: '50%',
+         fontSize: isMobile ? '11px' : '13px',
+         margin: '1px auto',
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'center',
+         border: 'none',
+         transition: 'background-color 0.2s, color 0.2s',
+         color: date.otherMonth || isPast ? '#D3D3D3' : '#000',
+         backgroundColor: 'transparent'
+     };
 
     // if (date.today && !isSelected) {
     //     style.color = '#1976d2';

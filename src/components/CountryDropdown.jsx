@@ -44,9 +44,15 @@ const countries = [
 const CountryDropdown = React.forwardRef((props, ref) => {
   const [selectedCountry, setSelectedCountry] = useState('')
   const [hasError, setHasError] = useState(false)
+  
+  // Debug hasError changes
+  React.useEffect(() => {
+    console.log('hasError changed to:', hasError)
+  }, [hasError])
   const [searchTerm, setSearchTerm] = useState('')
   const [touched, setTouched] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleChange = (event) => {
     const value = event.target.value
@@ -64,7 +70,8 @@ const CountryDropdown = React.forwardRef((props, ref) => {
   }
 
   const handleBlur = () => {
-    if (touched && !selectedCountry) {
+    // Only show error if dropdown was opened and closed without selection
+    if (touched && !selectedCountry && !searchTerm) {
       setHasError(true)
       setIsTyping(false)
     }
@@ -158,10 +165,10 @@ const CountryDropdown = React.forwardRef((props, ref) => {
             display: none !important;
           }
           
-                      .MuiAutocomplete-popupIndicator svg {
-              width: 30px !important;
-              height: 28px !important;
-            }
+          .MuiAutocomplete-popupIndicator svg {
+            width: 30px !important;
+            height: 28px !important;
+          }
         `}
       </style>
     <ThemeProvider theme={selfContainedTheme}>
@@ -205,16 +212,32 @@ const CountryDropdown = React.forwardRef((props, ref) => {
              if (hasError) {
                setHasError(false)
              }
+             setTouched(false) // Reset touched when selection is made
            }}
-                       onFocus={handleFocus}
-            onBlur={handleBlur}
-            inputValue={searchTerm}
-                       onInputChange={(event, newInputValue) => {
-              setSearchTerm(newInputValue)
-              if (hasError && newInputValue.trim() !== '') {
-                setIsTyping(true)
-              }
-            }}
+           onOpen={() => {
+             console.log('Dropdown opened')
+             setIsOpen(true)
+             setTouched(true)
+           }}
+           onClose={() => {
+             console.log('Dropdown closed, touched:', touched, 'selectedCountry:', selectedCountry, 'searchTerm:', searchTerm)
+             setIsOpen(false)
+             // Show error if dropdown was opened and closed without selection
+             if (touched && !selectedCountry && !searchTerm) {
+               console.log('Setting error state')
+               setHasError(true)
+               setIsTyping(false)
+             }
+           }}
+           onFocus={handleFocus}
+           onBlur={handleBlur}
+           inputValue={searchTerm}
+           onInputChange={(event, newInputValue) => {
+             setSearchTerm(newInputValue)
+             if (hasError && newInputValue.trim() !== '') {
+               setIsTyping(true)
+             }
+           }}
            renderInput={(params) => (
              <TextField
                {...params}

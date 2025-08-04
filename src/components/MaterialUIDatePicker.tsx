@@ -41,7 +41,10 @@ const StyledDatePicker = styled(StaticDatePicker)(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '11px',
+      fontSize: '12px',
+      width: '30px',
+      height: '30px',
+      margin: '0 3px',
     },
   },
   '& .MuiDayCalendar-weekContainer': {
@@ -57,8 +60,9 @@ const StyledDatePicker = styled(StaticDatePicker)(({ theme }) => ({
     fontSize: '14px',
     borderRadius: '50%',
     [theme.breakpoints.down('sm')]: {
-      width: '28px',
-      height: '28px',
+      width: '26px',
+      height: '26px',
+      margin: '0 2px',
     },
     '&.Mui-selected': {
       backgroundColor: '#b9d0ff !important',
@@ -185,7 +189,7 @@ function CustomHeader(props: PickersCalendarHeaderProps & { setViewedMonth: (dat
             slotProps: {
               paper: {
                 sx: {
-                  marginTop: '440px',
+                  marginTop: '310px',
                 },
               },
             },
@@ -226,6 +230,7 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
   const [viewedMonth, setViewedMonth] = useState<Dayjs>(dayjs());
   const [muiError, setMuiError] = useState<string | null>(null);
   const [calendarPosition, setCalendarPosition] = useState<{ top?: number | string, left?: number | string, position: 'absolute' | 'fixed', width?: number }>({ position: 'fixed' });
+  const [lastScrollY, setLastScrollY] = useState(0);
   const CALENDAR_WIDTH = 315; 
 
   const handleDateSelection = (newValue: Dayjs | null) => {
@@ -253,10 +258,10 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
       let newTop, newLeft;
       
       if (isMobile) {
-        // On mobile, center the calendar and position it below the input
-        const mobileCalendarWidth = Math.min(viewportWidth - 20, 350); // Full width minus margins
-        newTop = Math.min(inputRect.bottom + 10, viewportHeight - mobileCalendarWidth - 20);
-        newLeft = Math.max(10, (viewportWidth - mobileCalendarWidth) / 2);
+        // On mobile, use medium width calendar
+        const mobileCalendarWidth = Math.min(viewportWidth - 20, 320); // Medium width for mobile
+        newTop = inputRect.bottom - 40; // Quadruple overlap with input - 40px above bottom
+        newLeft = inputRect.left; // Start exactly where input starts
         
         setCalendarPosition({
           position: 'fixed',
@@ -289,6 +294,7 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
     console.log('handleOpen called');
     setViewedMonth(selectedDate || dayjs());
     setShowCalendar(true);
+    setLastScrollY(window.scrollY); // Set initial scroll position
     console.log('showCalendar set to true');
     setTimeout(() => {
       calculateCalendarPosition();
@@ -302,7 +308,27 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
         calculateCalendarPosition();
       }
     };
+    
+    const handleScroll = () => {
+      if (showCalendar) {
+        const currentScrollY = window.scrollY;
+        const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+        
+        // On mobile, allow a bit more scroll before closing
+        const isMobile = window.innerWidth <= 768;
+        const scrollThreshold = isMobile ? 15 : 10; // 15px on mobile, 10px on desktop
+        
+        if (scrollDifference > scrollThreshold) {
+          console.log('Scroll threshold exceeded, closing calendar');
+          setShowCalendar(false);
+        }
+        
+        setLastScrollY(currentScrollY);
+      }
+    };
+    
     window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll, true); // true for capture phase
     
     const handleOutsideClick = (event: MouseEvent) => {
       console.log('Outside click detected');
@@ -324,6 +350,7 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll, true);
     };
   }, [showCalendar]);
 
@@ -435,10 +462,16 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
                 '& .MuiInputBase-input': {
                   padding: '7px 14px',
                   cursor: 'pointer',
-                  color: '#021D2D',
+                  color: selectedDate ? '#021D2D' : '#808D95',
+                  fontSize: '14px',
+                  fontFamily: "'Lato', sans-serif",
+                  lineHeight: '17px',
                   '&::placeholder': {
-                    color: '#BAC1C5',
+                    color: '#808D95',
                     opacity: 1,
+                    fontFamily: "'Lato', sans-serif",
+                    fontSize: '14px',
+                    lineHeight: '17px',
                   },
                 },
               }}

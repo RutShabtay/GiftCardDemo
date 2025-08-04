@@ -60,23 +60,23 @@ function App() {
               backdropFilter: 'blur(10px)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
               borderRadius: '50px',
-              px: { xs: 1.5, md: 3 },
-              py: { xs: 0.8, md: 1.5 },
+              px: { xs: 1.2, md: 3 },
+              py: { xs: 0.6, md: 1.5 },
               mb: { xs: 0.5, md: 2 },
               color: 'white',
               animation: 'breathe 3s ease-in-out infinite'
             }}>
               <Box sx={{
-                width: { xs: 5, md: 8 },
-                height: { xs: 5, md: 8 },
+                width: { xs: 4, md: 8 },
+                height: { xs: 4, md: 8 },
                 borderRadius: '50%',
                 backgroundColor: '#fbbf24',
-                mr: { xs: 1, md: 2 },
+                mr: { xs: 0.8, md: 2 },
                 animation: 'pulse 2s infinite'
               }} />
               <Typography variant="body2" sx={{ 
                 fontWeight: 500,
-                fontSize: { xs: '0.65rem', md: '0.875rem' },
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
                 textTransform: 'uppercase',
                 letterSpacing: '0.1em'
               }}>
@@ -89,7 +89,7 @@ function App() {
               component="h1" 
               sx={{ 
                 fontWeight: 700,
-                fontSize: { xs: '2.5rem', md: '4rem' },
+                fontSize: { xs: '2rem', md: '4rem' },
                 color: 'white',
                 mb: { xs: 0.5, md: 1 },
                 letterSpacing: '-0.02em',
@@ -103,7 +103,7 @@ function App() {
               sx={{ 
                 color: 'rgba(255, 255, 255, 0.9)',
                 fontWeight: 400,
-                fontSize: { xs: '1.25rem', md: '1.75rem' },
+                fontSize: { xs: '0.9rem', md: '1.75rem' },
                 mb: 2,
                 letterSpacing: '-0.01em'
               }}
