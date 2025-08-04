@@ -98,6 +98,8 @@ style.textContent = `
     color: #808D95 !important;
   }
   
+
+  
   /* ULTIMATE PLACEHOLDER OVERRIDE - FORCE ALL TEXT TO BE GRAY */
   #country-dropdown *,
   #country-dropdown *::before,
@@ -870,10 +872,13 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
   const [filteredCountries, setFilteredCountries] = useState(countries)
 
   const handleChange = (e) => {
+    console.log('handleChange called with:', e.value)
+    console.log('Current hasError:', hasError)
     setSelectedCountry(e.value)
     setSearchTerm('') // Clear search term when a country is selected
     setFilteredCountries(countries) // Reset to all countries
     if (hasError) {
+      console.log('Clearing error state')
       setHasError(false)
     }
   }
@@ -913,6 +918,15 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
     validate
   }))
 
+  // Debug effect to track selectedCountry changes
+  React.useEffect(() => {
+    console.log('selectedCountry changed to:', selectedCountry)
+    if (selectedCountry && hasError) {
+      console.log('Clearing error because selectedCountry is now:', selectedCountry)
+      setHasError(false)
+    }
+  }, [selectedCountry, hasError])
+
   return (
     <div className="p-field" style={{ width: '274px' }}>
                      <label 
@@ -937,8 +951,16 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
         </label>
              <Dropdown
          id="country-dropdown"
-         value={selectedCountry}
+         value={selectedCountry || null}
          onChange={handleChange}
+         onSelect={(e) => {
+           console.log('onSelect called with:', e.value)
+           setSelectedCountry(e.value)
+           if (hasError) {
+             console.log('Clearing error state from onSelect')
+             setHasError(false)
+           }
+         }}
          placeholder="Select country"
                                        placeholderStyle={{
              color: '#808D95 !important', // Placeholder color to match border
@@ -950,6 +972,7 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
              letterSpacing: '0%'
            }}
          className={classNames('w-full', { 'p-invalid': hasError })}
+
          onShow={() => setIsOpen(true)}
          onHide={handleHide}
          onMouseEnter={() => setIsHovered(true)}
@@ -959,7 +982,7 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
           onInput={handleInputChange}
          style={{
            height: '32px', // Hug height from Figma
-           backgroundColor: hasError && !isOpen && !isFocused ? '#FFF5F7' : '#FFFFFF', // Red background only when error and not interacting
+           backgroundColor: hasError ? '#FFF5F7' : '#FFFFFF', // bg-primary from Figma
            border: `1px solid ${hasError ? '#ef4444' : ((isOpen || isFocused) ? '#6780FF' : '#BAC1C5')}`, // border/border-selected-primary when open or focused
            borderRadius: '4px', // 4px radius from Figma
            width: '100%',
@@ -974,6 +997,8 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
           showClear={false}
           editable={true}
           options={filteredCountries}
+          optionLabel="label"
+          optionValue="value"
           clearIcon={null}
                                                                                                                                                                itemTemplate={(option) => {
               return (

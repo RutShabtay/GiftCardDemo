@@ -63,15 +63,19 @@ const CountryDropdown = React.forwardRef((props, ref) => {
   }
 
   const handleFocus = () => {
+    console.log('MUI handleFocus called')
     setTouched(true)
     if (hasError) {
+      console.log('MUI: Setting isTyping to true')
       setIsTyping(true)
     }
   }
 
   const handleBlur = () => {
+    console.log('MUI handleBlur called, touched:', touched, 'selectedCountry:', selectedCountry, 'searchTerm:', searchTerm)
     // Only show error if dropdown was opened and closed without selection
     if (touched && !selectedCountry && !searchTerm) {
+      console.log('MUI: Setting error state')
       setHasError(true)
       setIsTyping(false)
     }
@@ -95,6 +99,15 @@ const CountryDropdown = React.forwardRef((props, ref) => {
   React.useImperativeHandle(ref, () => ({
     validate
   }))
+
+  // Debug effect to track selectedCountry changes
+  React.useEffect(() => {
+    console.log('MUI selectedCountry changed to:', selectedCountry)
+    if (selectedCountry && hasError) {
+      console.log('MUI: Clearing error because selectedCountry is now:', selectedCountry)
+      setHasError(false)
+    }
+  }, [selectedCountry, hasError])
 
   return (
     <div style={{ margin: 0, padding: 0, width: 274 }}>
@@ -208,8 +221,11 @@ const CountryDropdown = React.forwardRef((props, ref) => {
            options={countries}
            value={selectedCountry}
            onChange={(event, newValue) => {
+             console.log('MUI onChange called with:', newValue)
+             console.log('Current hasError:', hasError)
              setSelectedCountry(newValue || '')
              if (hasError) {
+               console.log('MUI: Clearing error state')
                setHasError(false)
              }
              setTouched(false) // Reset touched when selection is made
