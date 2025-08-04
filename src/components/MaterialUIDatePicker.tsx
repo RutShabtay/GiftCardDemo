@@ -5,9 +5,7 @@ import {
   TextField,
   InputAdornment,
   Paper,
-  Button as MuiButton,
   FormControl,
-  FormHelperText,
   Select,
   MenuItem,
   IconButton
@@ -229,9 +227,6 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
   const [muiError, setMuiError] = useState<string | null>(null);
   const [calendarPosition, setCalendarPosition] = useState<{ top?: number | string, left?: number | string, position: 'absolute' | 'fixed', width?: number }>({ position: 'fixed' });
   const CALENDAR_WIDTH = 315; 
-  const INPUT_WIDTH = 274;    
-  const MARGIN_BELOW_INPUT = 1;
-  const MARGIN_SIDE = 1;
 
   const handleDateSelection = (newValue: Dayjs | null) => {
     setSelectedDate(newValue);
@@ -299,11 +294,6 @@ export const MaterialUIDatePicker: React.FC<MaterialUIDatePickerProps> = () => {
       calculateCalendarPosition();
       console.log('Calendar position calculated');
     }, 0);
-  };
-
-  const handleClose = () => {
-    console.log('handleClose called');
-    setShowCalendar(false);
   };
 
   useEffect(() => {
