@@ -8,10 +8,197 @@ import 'primeicons/primeicons.css'
 // Remove PrimeReact default focus styling and customize scrollbar
 const style = document.createElement('style')
 style.textContent = `
-  .p-dropdown:not(.p-disabled).p-focus {
-    outline: none !important;
+  /* ARROW COLOR OVERRIDE - HIGHEST PRIORITY */
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon *,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::before,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::after,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon svg,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon i,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon span {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+    background-color: transparent !important;
+    font-weight: 1 !important;
+    stroke-width: 0.001 !important;
+    transform: scale(1.05) !important;
+    font-size: 13px !important;
+  }
+  
+  /* Specific override for our dropdown */
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon *,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::before,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::after,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon svg,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon i,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon span {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+    background-color: transparent !important;
+    font-weight: 1 !important;
+    stroke-width: 0.001 !important;
+    transform: scale(1.05) !important;
+    font-size: 13px !important;
+  }
+  
+  /* OVERRIDE ANY OTHER DROPDOWN STYLES - HIGHEST PRIORITY */
+  #country-dropdown.p-dropdown {
+    background: #FFFFFF !important;
+    border: 1px solid #BAC1C5 !important;
     box-shadow: none !important;
   }
+  
+  /* Force light blue background on hover - FIXED */
+  .p-dropdown-panel .p-dropdown-item:hover {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    height: 40px !important;
+    display: flex !important;
+    alignItems: center !important;
+  }
+  
+  /* Override any other hover styles */
+  .p-dropdown-panel .p-dropdown-item:hover,
+  .p-dropdown-panel .p-dropdown-item.p-highlight:hover {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+  }
+  
+  /* Force light blue background on the entire row */
+  .p-dropdown-panel .p-dropdown-item:hover {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+  }
+  
+  /* Remove any gray background */
+  .p-dropdown-panel .p-dropdown-item:hover,
+  .p-dropdown-panel .p-dropdown-item.p-highlight:hover,
+  .p-dropdown-panel .p-dropdown-item.p-highlight {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+  }
+  
+  /* Force light blue background on the entire row - override PrimeReact */
+  .p-dropdown-panel .p-dropdown-item:hover {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+  }
+  
+  /* Override PrimeReact default hover styles */
+  .p-dropdown-panel .p-dropdown-item.p-highlight:hover,
+  .p-dropdown-panel .p-dropdown-item.p-highlight {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+  }
+  
+  /* Remove any other background colors */
+  .p-dropdown-panel .p-dropdown-item:hover,
+  .p-dropdown-panel .p-dropdown-item.p-highlight:hover,
+  .p-dropdown-panel .p-dropdown-item.p-highlight {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+  }
+  
+  /* Force light blue background on hover - highest priority */
+  .p-dropdown-panel .p-dropdown-item:hover {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+    background-image: none !important;
+  }
+  
+  /* Override any PrimeReact default styles */
+  .p-dropdown-panel .p-dropdown-item.p-highlight:hover,
+  .p-dropdown-panel .p-dropdown-item.p-highlight {
+    background-color: #F0F5FF !important;
+    background: #F0F5FF !important;
+    background-image: none !important;
+  }
+  
+  /* Force light blue background on hover for all child elements */
+  #country-dropdown .p-dropdown-item:hover * {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* Ensure the entire row is covered */
+  #country-dropdown .p-dropdown-item {
+    width: 100% !important;
+    height: 40px !important;
+    display: flex !important;
+    alignItems: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Force full width and height for hover state */
+  #country-dropdown .p-dropdown-item:hover {
+    width: 100% !important;
+    height: 40px !important;
+    min-width: 100% !important;
+    min-height: 40px !important;
+    max-width: 100% !important;
+    max-height: 40px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    alignItems: center !important;
+    justifyContent: flex-start !important;
+  }
+  
+  /* Force background to cover entire row */
+  #country-dropdown .p-dropdown-item:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #E3F2FD;
+    z-index: -1;
+  }
+  
+  /* Force background to cover entire row for all dropdown items */
+  .p-dropdown-panel .p-dropdown-item:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #E3F2FD;
+    z-index: -1;
+  }
+  
+  #country-dropdown.p-dropdown:not(.p-disabled).p-focus {
+    background: #FFFFFF !important;
+    border: 1px solid #6780FF !important;
+    box-shadow: none !important;
+  }
+  
+  #country-dropdown.p-dropdown:hover {
+    background: #F0F9FF !important;
+    border: 1px solid #EFEFEF !important;
+  }
+  
+  #country-dropdown.p-dropdown.p-invalid {
+    background: #FFF5F7 !important;
+    border: 1px solid #ef4444 !important;
+  }
+  
+  .p-dropdown:not(.p-disabled).p-focus {
+
   
   .p-dropdown input {
     outline: none !important;
@@ -136,6 +323,7 @@ style.textContent = `
     background: #A0B0BF !important;
   }
   
+     /* Arrow color - FIXED */
      .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon {
     color: #808D95 !important;
   }
@@ -145,8 +333,59 @@ style.textContent = `
     color: #808D95 !important;
   }
   
+  /* Force arrow color for all states */
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon {
+    color: #808D95 !important;
+  }
+  
+  #country-dropdown.p-dropdown-open .p-dropdown-trigger .p-dropdown-trigger-icon,
+  #country-dropdown:has(.p-dropdown-label:not(.p-placeholder)) .p-dropdown-trigger .p-dropdown-trigger-icon {
+    color: #808D95 !important;
+  }
+  
+  /* Global arrow color override */
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon,
+  .p-dropdown.p-dropdown-open .p-dropdown-trigger .p-dropdown-trigger-icon,
+  .p-dropdown:has(.p-dropdown-label:not(.p-placeholder)) .p-dropdown-trigger .p-dropdown-trigger-icon {
+    color: #808D95 !important;
+  }
+  
+  /* Force arrow color - ULTIMATE OVERRIDE */
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::before,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::after,
+  .p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon * {
+    color: #808D95 !important;
+    fill: #808D95 !important;
+    stroke: #808D95 !important;
+  }
+  
+  /* Specific for our dropdown */
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::before,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon::after,
+  #country-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon * {
+    color: var(--arrow-color, #808D95) !important;
+    fill: var(--arrow-color, #808D95) !important;
+    stroke: var(--arrow-color, #808D95) !important;
+  }
+  
   /* Force placeholder color */
    .p-dropdown .p-dropdown-label.p-placeholder {
+     color: #808D95 !important;
+     opacity: 1 !important;
+     font-size: 14px !important;
+     line-height: 17px !important;
+     font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif !important;
+     font-weight: 400 !important;
+     letter-spacing: 0% !important;
+     display: flex !important;
+     align-items: center !important;
+     height: 32px !important;
+   }
+   
+   /* Specific placeholder color for our dropdown */
+   #country-dropdown .p-dropdown-label.p-placeholder {
      color: #808D95 !important;
      opacity: 1 !important;
      font-size: 14px !important;
@@ -192,11 +431,63 @@ style.textContent = `
     box-shadow: none !important;
   }
   
+  /* Remove black border from dropdown items */
+  .p-dropdown-item,
+  .p-dropdown-item *,
+  .p-dropdown-item:hover,
+  .p-dropdown-item:hover * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Force remove all black borders */
+  .p-dropdown-item,
+  .p-dropdown-item *,
+  .p-dropdown-item:hover,
+  .p-dropdown-item:hover *,
+  .p-dropdown-item:focus,
+  .p-dropdown-item:focus * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Only keep bottom border */
+  .p-dropdown-item {
+    border-bottom: 1px solid #EFEFEF !important;
+  }
+  
+  /* Remove bottom border from last item */
+  .p-dropdown-item:last-child {
+    border-bottom: none !important;
+  }
+  
   .p-dropdown-item:hover {
-    background-color: #F0F5FF !important;
+    background-color: #E3F2FD !important;
     border-bottom: 1px solid #EFEFEF !important;
     outline: none !important;
     box-shadow: none !important;
+  }
+  
+  /* Force remove all borders on hover */
+  .p-dropdown-item:hover,
+  .p-dropdown-item:hover * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #E3F2FD !important;
+  }
+  
+  /* Only keep bottom border on hover */
+  .p-dropdown-item:hover {
+    border-bottom: 1px solid #EFEFEF !important;
+    background-color: #E3F2FD !important;
+  }
+  
+  /* Remove bottom border from last item on hover */
+  .p-dropdown-item:last-child:hover {
+    border-bottom: none !important;
   }
   
   /* Remove all focus styles */
@@ -381,6 +672,7 @@ style.textContent = `
 if (!document.head.querySelector('style[data-primereact-focus]')) {
   style.setAttribute('data-primereact-focus', 'true')
   document.head.appendChild(style)
+  console.log('Arrow color CSS loaded:', style.textContent.includes('#808D95'))
 }
 
 const countries = [
@@ -405,99 +697,28 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
   const [isFocused, setIsFocused] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredCountries, setFilteredCountries] = useState(countries)
-  const [touched, setTouched] = useState(false)
-  const [isTyping, setIsTyping] = useState(false)
-  const [isHoveringItems, setIsHoveringItems] = useState(false)
 
   const handleChange = (e) => {
     setSelectedCountry(e.value)
     setSearchTerm('') // Clear search term when a country is selected
     setFilteredCountries(countries) // Reset to all countries
-    setIsFocused(false) // Clear focus state after selection
-    setIsHoveringItems(false) // Clear hovering items state after selection
-    setIsOpen(false) // Clear open state after selection
-    setIsHovered(false) // Clear hover state after selection to reset border color
     if (hasError) {
-      setHasError(false) // Clear error when user selects something
-    }
-  }
-
-  const handleFocus = () => {
-    setTouched(true)
-    setIsFocused(true)
-    // Clear error state when focusing for the first time
-    if (!touched) {
-      setHasError(false)
-      setIsTyping(false)
-    } else if (hasError) {
-      setIsTyping(true)
-    }
-    // If there's already a selection, ensure white background
-    if (selectedCountry && hasError) {
-      setIsTyping(true)
-    }
-    // Always clear error state when focusing to show blue border
-    setHasError(false)
-  }
-
-  const handleShow = () => {
-    setIsOpen(true)
-    setIsFocused(true) // Ensure focused state is set when dropdown opens
-    
-    // When dropdown opens, always show white background and clear error
-    if (hasError) {
-      setIsTyping(true)
       setHasError(false)
     }
-    
-    // Clear error state when dropdown opens for the first time
-    if (!touched) {
-      setHasError(false)
-      setIsTyping(false)
-    }
   }
 
-  const handleBlur = () => {
-    setIsFocused(false)
-    // Only show error if dropdown is closed and no country is selected
-    if (touched && !selectedCountry && !isOpen) {
-      setHasError(true)
-      setIsTyping(false)
-    }
-  }
-
-  const handleInputChange = (event, newInputValue) => {
-    setSearchTerm(newInputValue)
+  const handleInputChange = (e) => {
+    const value = e.target.value
+    setSearchTerm(value)
     
-    // When user starts typing, show white background
-    if (hasError) {
-      setIsTyping(true)
-    }
-    
-    if (newInputValue.trim() === '') {
+    if (value.trim() === '') {
       setFilteredCountries(countries)
     } else {
       const filtered = countries.filter(country => 
-        country.label.toLowerCase().includes(newInputValue.toLowerCase())
+        country.label.toLowerCase().includes(value.toLowerCase())
       )
       setFilteredCountries(filtered)
     }
-  }
-
-  const handleItemHover = () => {
-    // When hovering over dropdown items, set green background
-    setIsHoveringItems(true)
-    // Always set isTyping to true when hovering items to show white background
-    setIsTyping(true)
-    // Clear error state when hovering items to prevent pink background
-    if (hasError) {
-      setHasError(false)
-    }
-  }
-
-  const handleItemLeave = () => {
-    // When leaving dropdown items, remove green background
-    setIsHoveringItems(false)
   }
 
   const validate = () => {
@@ -550,132 +771,146 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
              letterSpacing: '0%'
            }}
          className={classNames('w-full', { 'p-invalid': hasError })}
-                   onShow={handleShow}
-          onHide={() => {
-            setIsOpen(false)
-            // Only show error when dropdown closes if the input is not focused
-            // Use setTimeout to allow focus state to properly determine if we're still in the input
-            setTimeout(() => {
-              if (touched && !selectedCountry && !isFocused) {
-              setHasError(true)
-              setIsTyping(false)
-            }
-            }, 50)
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onInputChange={handleInputChange}
-                   style={{
-            height: '32px', // Hug height from Figma
-            backgroundColor: hasError && !isHovered ? '#FFF5F7' : (isHovered && !isOpen && !isFocused && !hasError ? '#F0F9FF' : '#FFFFFF'), // Same hover background as regular input, regardless of selection
-            border: `1px solid ${hasError ? '#ef4444' : ((isOpen || isFocused || isHoveringItems) ? '#6780FF' : (isHovered ? '#EFEFEF' : '#BAC1C5'))}`, // border/border-selected-primary when open or focused or hovering items
-            borderRadius: '4px', // 4px radius from Figma
-            width: '100%',
-            outline: 'none',
-            boxShadow: 'none',
-            position: 'relative'
-          }}
+         onShow={() => setIsOpen(true)}
+         onHide={() => setIsOpen(false)}
+         onMouseEnter={() => setIsHovered(true)}
+         onMouseLeave={() => setIsHovered(false)}
+         onFocus={() => setIsFocused(true)}
+                   onBlur={() => setIsFocused(false)}
+          onInput={handleInputChange}
+         style={{
+           height: '32px', // Hug height from Figma
+           backgroundColor: hasError ? '#FFF5F7' : '#FFFFFF', // bg-primary from Figma
+           border: `1px solid ${hasError ? '#ef4444' : ((isOpen || isFocused) ? '#6780FF' : '#BAC1C5')}`, // border/border-selected-primary when open or focused
+           borderRadius: '4px', // 4px radius from Figma
+           width: '100%',
+           outline: 'none',
+           boxShadow: 'none',
+           position: 'relative',
+           '--arrow-color': '#808D95'
+         }}
                    scrollHeight="200px"
           showClear={false}
           editable={true}
           options={filteredCountries}
           clearIcon={null}
-          dropdownIcon={
-            <svg width="28" height="16" viewBox="0 0 28 16" fill="none">
-              <path d="M7.5 5.5L14 12L20.5 5.5" stroke="#808D95" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          }
-                   itemTemplate={(option) => {
-           return (
-                           <div style={{
-                padding: '7.5px 12px', // Figma padding: Top 7.5px, Right 12px, Bottom 7.5px, Left 12px
-                fontSize: '14px', // Match dropdown text size
-                lineHeight: '17px', // Match dropdown line height
-                minHeight: '40px', // Hug (40px) from Figma
-                height: '40px', // Fixed height
-                display: 'flex',
-                alignItems: 'center',
-                boxSizing: 'border-box',
-                position: 'relative',
-                color: '#021D2D',
-                fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
-                letterSpacing: '0%', // Letter spacing from Figma
-                width: '100%',
-                borderBottom: '1px solid #EFEFEF', // border/border-list-separator from Figma
-                borderTop: 'none',
-                borderLeft: 'none',
-                borderRight: 'none',
-                outline: 'none',
-                boxShadow: 'none'
-              }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               onMouseEnter={(e) => {
-                      // Check if this is the first or last item
-                      const allItems = e.target.parentElement.children
-                      const isFirst = e.target === allItems[0]
-                      const isLast = e.target === allItems[allItems.length - 1]
-                      
-                      e.target.style.backgroundColor = '#F0F5FF'
-                      
-                      if (isFirst) {
-                        e.target.style.borderRadius = '0'
-                        e.target.style.borderTopLeftRadius = '8px'
-                      } else if (isLast) {
-                        e.target.style.borderRadius = '0'
-                        e.target.style.borderBottomLeftRadius = '8px'
-                      } else {
-                        e.target.style.borderRadius = '0'
-                      }
-                      
-                      // Force rounded corners for all child elements
-                      const children = e.target.querySelectorAll('*')
-                      children.forEach(child => {
+                                                                                                                                                               itemTemplate={(option) => {
+              return (
+                              <div style={{
+                   padding: '7.5px 12px', // Figma padding: Top 7.5px, Right 12px, Bottom 7.5px, Left 12px
+                   fontSize: '14px', // Match dropdown text size
+                   lineHeight: '17px', // Match dropdown line height
+                   minHeight: '40px', // Hug (40px) from Figma
+                   height: '40px', // Fixed height
+                   display: 'flex',
+                   alignItems: 'center',
+                   boxSizing: 'border-box',
+                   position: 'relative',
+                   color: '#021D2D',
+                   fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+                   letterSpacing: '0%', // Letter spacing from Figma
+                   width: '100%',
+                   borderBottom: '1px solid #EFEFEF', // border/border-list-separator from Figma
+                   borderTop: 'none',
+                   borderLeft: 'none',
+                   borderRight: 'none',
+                   outline: 'none',
+                   boxShadow: 'none',
+                   backgroundColor: 'transparent',
+                   transition: 'background-color 0.2s ease',
+                   cursor: 'pointer',
+                   margin: 0
+                 }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 onMouseEnter={(e) => {
+                        // Check if this is the first or last item
+                        const allItems = e.target.parentElement.children
+                        const isFirst = e.target === allItems[0]
+                        const isLast = e.target === allItems[allItems.length - 1]
+                        
+                                                                                                   // Set background for the entire row
+                          e.target.style.backgroundColor = '#F0F5FF'
+                          e.target.style.setProperty('background-color', '#F0F5FF', 'important')
+                          e.target.style.setProperty('background', '#F0F5FF', 'important')
+                                                 e.target.style.border = 'none'
+                         e.target.style.outline = 'none'
+                         e.target.style.boxShadow = 'none'
+                         e.target.style.width = '100%'
+                         e.target.style.height = '40px'
+                         e.target.style.display = 'flex'
+                         e.target.style.alignItems = 'center'
+                         e.target.style.padding = '7.5px 12px'
+                         e.target.style.margin = '0'
+                         e.target.style.justifyContent = 'flex-start'
+                        
                         if (isFirst) {
-                          child.style.borderRadius = '0'
-                          child.style.borderTopLeftRadius = '8px'
+                          e.target.style.borderRadius = '0'
+                          e.target.style.borderTopLeftRadius = '8px'
                         } else if (isLast) {
-                          child.style.borderRadius = '0'
-                          child.style.borderBottomLeftRadius = '8px'
+                          e.target.style.borderRadius = '0'
+                          e.target.style.borderBottomLeftRadius = '8px'
                         } else {
-                          child.style.borderRadius = '0'
+                          e.target.style.borderRadius = '0'
                         }
-                      })
-                      
-                      // Ensure white background on input when hovering items
-                      handleItemHover()
-                    }}
+                        
+                                                 // Force background for all child elements
+                         const children = e.target.querySelectorAll('*')
+                         children.forEach(child => {
+                           child.style.backgroundColor = 'transparent'
+                           child.style.border = 'none'
+                           child.style.outline = 'none'
+                           child.style.boxShadow = 'none'
+                           child.style.width = '100%'
+                           child.style.height = '100%'
+                           if (isFirst) {
+                             child.style.borderRadius = '0'
+                             child.style.borderTopLeftRadius = '8px'
+                           } else if (isLast) {
+                             child.style.borderRadius = '0'
+                             child.style.borderBottomLeftRadius = '8px'
+                           } else {
+                             child.style.borderRadius = '0'
+                           }
+                         })
+                      }}
                                                                                                                                        onMouseLeave={(e) => {
-                    // Check if this is the last item
-                    const allItems = e.target.parentElement.children
-                    const isLast = e.target === allItems[allItems.length - 1]
-                    
-                    e.target.style.backgroundColor = 'transparent'
-                    e.target.style.transition = 'background-color 0.1s ease'
-                    e.target.style.borderRadius = '0'
-                    e.target.style.borderTopLeftRadius = '0'
-                    e.target.style.borderBottomLeftRadius = '0'
-                    
-                    // Only add bottom border if it's not the last item
-                    if (!isLast) {
-                      e.target.style.borderBottom = '1px solid #EFEFEF'
-                    } else {
-                      e.target.style.borderBottom = 'none'
-                    }
-                    
-                    // Reset all child elements
-                    const children = e.target.querySelectorAll('*')
-                    children.forEach(child => {
-                      child.style.borderRadius = '0'
-                      child.style.borderTopLeftRadius = '0'
-                      child.style.borderBottomLeftRadius = '0'
-                      child.style.borderBottom = 'none'
-                      child.style.border = 'none'
-                    })
-                    
-                    // Remove green background when leaving items
-                    handleItemLeave()
-                  }}
+                     // Check if this is the last item
+                     const allItems = e.target.parentElement.children
+                     const isLast = e.target === allItems[allItems.length - 1]
+                     
+                                           e.target.style.backgroundColor = 'transparent'
+                      e.target.style.setProperty('background-color', 'transparent', 'important')
+                      e.target.style.setProperty('background', 'transparent', 'important')
+                     e.target.style.border = 'none'
+                     e.target.style.outline = 'none'
+                     e.target.style.boxShadow = 'none'
+                     e.target.style.transition = 'background-color 0.1s ease'
+                     e.target.style.padding = '7.5px 12px'
+                     e.target.style.margin = '0'
+                     e.target.style.justifyContent = 'flex-start'
+                     e.target.style.borderRadius = '0'
+                     e.target.style.borderTopLeftRadius = '0'
+                     e.target.style.borderBottomLeftRadius = '0'
+                     
+                     // Only add bottom border if it's not the last item
+                     if (!isLast) {
+                       e.target.style.borderBottom = '1px solid #EFEFEF'
+                     } else {
+                       e.target.style.borderBottom = 'none'
+                     }
+                     
+                     // Reset all child elements
+                     const children = e.target.querySelectorAll('*')
+                     children.forEach(child => {
+                       child.style.backgroundColor = 'transparent'
+                       child.style.border = 'none'
+                       child.style.outline = 'none'
+                       child.style.boxShadow = 'none'
+                       child.style.borderRadius = '0'
+                       child.style.borderTopLeftRadius = '0'
+                       child.style.borderBottomLeftRadius = '0'
+                       child.style.borderBottom = 'none'
+                     })
+                   }}
              >
                {option.label}
              </div>
@@ -689,12 +924,28 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
                boxShadow: 'none'
              }
            },
+           trigger: {
+             style: {
+               color: '#808D95'
+             }
+           },
+           triggerIcon: {
+             style: {
+               color: '#808D95',
+               fill: '#808D95',
+               stroke: '#808D95',
+               fontWeight: 1,
+               strokeWidth: 0.001,
+               transform: 'scale(1.05)',
+               fontSize: '13px'
+             }
+           },
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                input: { 
                    style: { 
                      padding: '7.5px 8px', // Figma padding: Top 7.5px, Right 8px, Bottom 7.5px, Left 8px
                      fontSize: '14px', // Smaller font size for 32px height
                      lineHeight: '17px', // Adjusted line height
-                     color: '#021D2D', // Text color when typing
+                     color: selectedCountry || searchTerm ? '#021D2D' : '#808D95',
                      fontFamily: '"Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
                      fontWeight: 400,
                      height: '32px', // Match dropdown height for proper centering
@@ -720,7 +971,10 @@ const CountryDropdownPrime = React.forwardRef((props, ref) => {
                 borderBottom: '1px solid #EFEFEF', // border/border-list-separator from Figma
                 borderTop: 'none',
                 borderLeft: 'none',
-                borderRight: 'none'
+                borderRight: 'none',
+                backgroundColor: 'transparent',
+                outline: 'none',
+                boxShadow: 'none'
               }
             },
             
